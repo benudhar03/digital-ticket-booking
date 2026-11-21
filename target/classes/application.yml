@@ -1,12 +1,30 @@
 server:
   port: 9080
+
 spring:
   application:
     name: digital-ticket-booking
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/booking_db
-    username: postgres
-    password: P@ssw0rd
+    primary:
+      jdbc-url: jdbc:postgresql://localhost:5432/booking_db
+      username: postgres
+      password: ${DB_PASSWORD:P@ssw0rd}
+      driver-class-name: org.postgresql.Driver
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+    replica:
+      # Temporary: same DB until the actual replica is configured.
+      # Later change port 5432 to 5433.
+      jdbc-url: jdbc:postgresql://localhost:5432/booking_db
+      username: postgres
+      password: ${DB_PASSWORD:P@ssw0rd}
+      driver-class-name: org.postgresql.Driver
+      maximum-pool-size: 10
+      minimum-idle: 0
+      initialization-fail-timeout: -1
+
   jpa:
     hibernate:
       jdbc:
