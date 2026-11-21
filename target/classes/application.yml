@@ -1,6 +1,8 @@
 server:
   port: 9080
 spring:
+  application:
+    name: digital-ticket-booking
   datasource:
     url: jdbc:postgresql://localhost:5432/booking_db
     username: postgres
