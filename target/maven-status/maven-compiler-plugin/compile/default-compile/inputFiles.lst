@@ -1,5 +1,9 @@
 D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\BookTicketApplication.java
-D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\cofig\JacksonConfig.java
+D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\config\ClockConfig.java
+D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\config\DatabaseRoutingConfig.java
+D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\config\DatabaseType.java
+D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\config\JacksonConfig.java
+D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\config\RoutingDataSource.java
 D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\controller\BookingController.java
 D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\controller\MovieController.java
 D:\projects-code\tikctet\gitApp\digital-ticket-booking\src\main\java\com\digital\booking\domain\Booking.java

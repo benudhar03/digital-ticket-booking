@@ -9,6 +9,7 @@ com\digital\booking\BookTicketApplication.class
 com\digital\booking\service\BookingService.class
 com\digital\booking\exception\PaymentFailedException.class
 com\digital\booking\domain\BookingStatus.class
+com\digital\booking\config\ClockConfig.class
 com\digital\booking\domain\Booking.class
 com\digital\booking\repository\BookingRepository.class
 com\digital\booking\repository\OutboxRepository.class
@@ -18,7 +19,6 @@ com\digital\booking\dto\SeatLockResponse.class
 com\digital\booking\dto\BookTicketResponse.class
 com\digital\booking\domain\ShowSeat$ShowSeatBuilder.class
 com\digital\booking\repository\ShowSeatRepository.class
-com\digital\booking\cofig\JacksonConfig.class
 com\digital\booking\dto\BookTicketRequest.class
 com\digital\booking\service\OutboxService.class
 com\digital\booking\exception\InvalidBookingStateException.class
