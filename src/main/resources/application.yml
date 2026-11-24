@@ -1,46 +1,66 @@
-server:
-  port: 9080
+name: CI
 
-spring:
-  application:
-    name: digital-ticket-booking
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
-  datasource:
-    primary:
-      jdbc-url: jdbc:postgresql://localhost:5432/booking_db
-      username: postgres
-      password: ${DB_PASSWORD:P@ssw0rd}
-      driver-class-name: org.postgresql.Driver
-      maximum-pool-size: 10
-      minimum-idle: 2
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
 
-    replica:
-      # Temporary: same DB until the actual replica is configured.
-      # Later change port 5432 to 5433.
-      jdbc-url: jdbc:postgresql://localhost:5432/booking_db
-      username: postgres
-      password: ${DB_PASSWORD:P@ssw0rd}
-      driver-class-name: org.postgresql.Driver
-      maximum-pool-size: 10
-      minimum-idle: 0
-      initialization-fail-timeout: -1
+    env:
+      DB_PASSWORD: ci-test-password
 
-  jpa:
-    hibernate:
-      jdbc:
-        time_zone: UTC
-      ddl-auto: update
-    open-in-view: false
-  data:
-    redis:
-      host: localhost
-      port: 6379
-booking:
-  seat-lock-ttl-seconds: 300
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci-test-password
+          POSTGRES_DB: booking_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-  api-docs:
-    enabled: true
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Build and run tests
+        run: ./mvnw -B clean verify
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports/
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
